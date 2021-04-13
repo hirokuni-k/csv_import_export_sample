@@ -1,9 +1,6 @@
 class ImportController < ApplicationController
   def create
-    file = params[:file]
-    CSV.foreach(file.path, headers: true) do |row|
-      User.create!(row.to_h)
-    end
+    User.import_csv(file: params[:file]) if params[:file].present?
     redirect_to users_path
   end
 end
