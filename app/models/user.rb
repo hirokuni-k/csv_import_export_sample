@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   CSV_COLUMNS = %w[name age height].freeze
   def self.import_csv(file:)
+    now = Time.current
+    timestamp_attributes = { created_at: now, updated_at: now }
     list = []
     CSV.foreach(file.path, headers: true) do |row|
       list << row.to_h.slice(*CSV_COLUMNS)
